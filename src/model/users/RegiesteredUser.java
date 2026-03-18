@@ -17,9 +17,6 @@ public class RegiesteredUser extends GuestUser { //lai viss kas bija guest usera
 	public String getPassword() {
 		return password;
 	}
-	public String getTitle() {
-		return title;
-	}
 	
 	//3. setteri
 	public void setUsername(String inputUsername) {
@@ -30,23 +27,25 @@ public class RegiesteredUser extends GuestUser { //lai viss kas bija guest usera
 			username = "DefaultUser";
 		}
 	}
-	
+	//regex maska parole panemts no : 
 	public void setPassword(String inputPassword) { //TODO parbaudit != null, not empty, masku
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			password = md.digest().toString();
+		if(inputPassword != null && !inputPassword.isEmpty() && inputPassword.matches("/^(?=.")) {
+			try {
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(password.getBytes());
+				password = md.digest().toString();
+			}
+			catch (Exception e) {
+				password = "0000";
+			}
 		}
-		catch (Exception e) {
-			
+		else {
+			password = "0000";
 		}
 		
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
+
 	//4. abi konstrutkori
 	
 	
