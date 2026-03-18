@@ -2,12 +2,12 @@ package model.users;
 
 import java.security.MessageDigest;
 
-public class RegiesteredUser extends GuestUser { //lai viss kas bija guest useram butu ari seit
+import service.IPostPublish; 
+
+public abstract class RegiesteredUser extends GuestUser implements IPostPublish { //lai viss kas bija guest useram butu ari seit
 	//1. mainigie
 	private String username;
 	private String password;
-	private String title; //privatajam lietotajam vards un uzvards, biznesa lietotajam - kompanijas nosaukums
-	
 	
 	
 	//2. getteri
@@ -27,9 +27,9 @@ public class RegiesteredUser extends GuestUser { //lai viss kas bija guest usera
 			username = "DefaultUser";
 		}
 	}
-	//regex maska parole panemts no : 
+	//Regex maska parolei no : https://uibakery.io/regex-library/password
 	public void setPassword(String inputPassword) { //TODO parbaudit != null, not empty, masku
-		if(inputPassword != null && !inputPassword.isEmpty() && inputPassword.matches("/^(?=.")) {
+		if(inputPassword != null && !inputPassword.isEmpty() && inputPassword.matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/")) {
 			try {
 				MessageDigest md = MessageDigest.getInstance("MD5");
 				md.update(password.getBytes());
@@ -47,10 +47,23 @@ public class RegiesteredUser extends GuestUser { //lai viss kas bija guest usera
 	
 
 	//4. abi konstrutkori
+	public RegiesteredUser() {
+		super(); //izsaucas guestuser ezagrumenta konstruktors
+		setUsername("karina.skirmante");
+		setPassword("As1@aaaa");
+	}
 	
+	public RegiesteredUser(String inputUsername, String inputPassword) {
+		super();
+		setUsername(inputUsername);
+		setPassword(inputPassword);
+	}
 	
 	//5. toString
-	
+	public String toString() {
+		String result = id + ": " + username + " " + password;
+		return result;
+	}
 	
 	//6. parejas funkcijas
 	
