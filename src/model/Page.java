@@ -57,6 +57,11 @@ public class Page {
 		setDescription(inputDescription);
 	}
 	
+	//to string
+	public String toString() {
+		String result = title + " " + description + ": sludinajumi\n -> " + allPostsPage + "\n sekotaji : " + allPageFollowers;
+		return result;
+	}
 	
 	
 	
